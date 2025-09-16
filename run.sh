@@ -1,1 +1,1 @@
-echo 'Harness Example Sep 2025 Edit the file 2nd edit'
+echo 'Harness Example Sep 2025  2nd edit'
