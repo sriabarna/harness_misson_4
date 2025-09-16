@@ -1,0 +1,45 @@
+pipeline:
+  name: Simple Pipeline
+  identifier: Simple_Pipeline
+  projectIdentifier: default_project
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.account_level_github_connector
+        repoName: harness_misson_4
+        build: <+input>
+  stages:
+    - stage:
+        name: Run Script
+        identifier: Run_Script
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: true
+          buildIntelligence:
+            enabled: true
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.sri_farm_kubernetess_connector
+              namespace: harness-delegate-ng
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Run Script
+                  identifier: Run_Script
+                  spec:
+                    connectorRef: account.account_level_docker_connector
+                    image: bash
+                    shell: Sh
+                    command: sh run.sh
+                  description: Run other Linux commands
